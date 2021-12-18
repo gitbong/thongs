@@ -1,2 +1,2 @@
-# thongs
+# 🩴 Thongs
 Thongs is a mock server

@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #ffffff;
+}
+
+select {
+  position: relative;
+}
+.selectIcon {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  right: 10px;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%) rotate(-135deg);
+  border-left: 2px solid #666;
+  border-top: 2px solid #666;
+  box-sizing: border-box;
+  pointer-events: none;
+}
