@@ -17,6 +17,10 @@
       .then((response) => response.json())
       .then((data) => console.log("response for get call:", data));
 
+    fetch("http://localhost:3000/v1/books")
+      .then((response) => response.json())
+      .then((data) => console.log("response for get books:", data));
+
     (async () => {
       const rawResponse = await fetch("http://localhost:3000/pages/goods?a=4", {
         method: "POST",

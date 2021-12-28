@@ -1,8 +1,8 @@
 import _isEmpty from "lodash/isEmpty";
 import React from "react";
-import { Route } from "../../shared/types";
 import { Dispatch, useAppContext } from "../AppContext";
 import { useUpdateRoute } from "../hooks";
+import { Route } from "../shared/types";
 import MethodBadge, { Method } from "./MethodBadge";
 import Select from "./Select";
 

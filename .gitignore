@@ -2,4 +2,5 @@
 coverage
 node_modules
 build
-src/server/www
+dist
+.npmignore

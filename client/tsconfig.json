@@ -18,6 +18,6 @@
     "jsx": "react-jsx",
     "noImplicitAny": false
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/*.d.ts", "src/server/www"]
+  // "include": ["./"],
+  "exclude": ["node_modules", "**/*.d.ts"]
 }

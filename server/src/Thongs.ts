@@ -1,11 +1,11 @@
 import bodyParser from "body-parser";
 import express from "express";
 import path from "path";
-import { Route } from "../shared/types";
 import commonHeader from "./middleware/commonHeader";
 import router from "./router/router";
 import { useSelector } from "./selector";
 import { selectRouteById, selectRoutes } from "./selector/route";
+import { Route } from "./shared/types";
 import { dispatch } from "./store";
 import {
   reset,
@@ -17,6 +17,7 @@ import {
 
 export default (routesConfig: RouteConfig[]) => {
   const app = express();
+  app.use(express.static(path.join(__dirname, "www")));
 
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
@@ -24,7 +25,6 @@ export default (routesConfig: RouteConfig[]) => {
 
   routesConfig.forEach((routeConfig) => dispatch(saveRouteConfig(routeConfig)));
   app.use("/", router());
-  app.use(express.static(path.join(__dirname, "www")));
 
   app.get("/thongs/routes", (req, res) => {
     const routes = useSelector<RouteState[]>(selectRoutes);

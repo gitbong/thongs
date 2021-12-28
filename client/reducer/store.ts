@@ -1,4 +1,4 @@
-import { Route } from "../../shared/types";
+import { Route } from "../shared/types";
 
 export interface RootState {
   searchValue: string;

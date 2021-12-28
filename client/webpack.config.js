@@ -1,11 +1,12 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
 
-const outputDirectory = "src/server/www";
+const outputDirectory = "../server/dist/www";
 
 module.exports = {
-  entry: "./src/client/index.tsx",
+  entry: "./index.tsx",
   output: {
     path: path.join(__dirname, outputDirectory),
     filename: "index.bundle.js",
@@ -44,9 +45,9 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      // template: path.join(__dirname, "src", "client/index.html"),
-      template: "./src/client/index.html",
+      template: "./index.html",
     }),
     new MiniCssExtractPlugin(),
+    new OptimizeCssAssetsWebpackPlugin(),
   ],
 };
