@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import mockAxios from "jest-mock-axios";
 import App from "./App";
@@ -30,39 +30,45 @@ describe("App", () => {
   };
 
   it("should render App correctly", async () => {
-    const { findByText, getByText, getByTestId } = renderApp();
+    renderApp();
 
-    expect(await findByText("/pages/goods")).toBeInTheDocument();
-    expect(getByText("POST")).toBeInTheDocument();
-    expect(getByText("Thongs is a mock server")).toBeInTheDocument();
+    expect(await screen.findByText("/pages/goods")).toBeInTheDocument();
+    expect(screen.getByText("POST")).toBeInTheDocument();
+    expect(screen.getByText("Thongs is a mock server")).toBeInTheDocument();
 
-    const handlerSelect = getByTestId("handler") as HTMLSelectElement;
+    const handlerSelect = screen.getByTestId("handler") as HTMLSelectElement;
     expect(handlerSelect.value).toBe("1");
-    expect(getByText("success")).toBeInTheDocument();
-    expect(getByText("fail")).toBeInTheDocument();
+    expect(screen.getByText("success")).toBeInTheDocument();
+    expect(screen.getByText("fail")).toBeInTheDocument();
 
-    const delaySelect = getByTestId("delay") as HTMLSelectElement;
+    const delaySelect = (await screen.findByTestId(
+      "delay"
+    )) as HTMLSelectElement;
+
     expect(delaySelect.value).toBe("2");
-    expect(getByText("0s")).toBeInTheDocument();
-    expect(getByText("2s")).toBeInTheDocument();
-    expect(getByText("5s")).toBeInTheDocument();
-    expect(getByText("10s")).toBeInTheDocument();
+    expect(screen.getByText("0s")).toBeInTheDocument();
+    expect(screen.getByText("2s")).toBeInTheDocument();
+    expect(screen.getByText("5s")).toBeInTheDocument();
+    expect(screen.getByText("10s")).toBeInTheDocument();
 
     expect(mockAxios.get).toHaveBeenCalledWith("/thongs/routes");
   });
 
-  it("should patch route config when select handler", () => {
-    const { getByTestId } = renderApp();
-    userEvent.selectOptions(getByTestId("handler"), ["0"]);
+  it("should patch route config when select handler", async () => {
+    const user = userEvent.setup();
+    renderApp();
+    await user.selectOptions(await screen.findByTestId("handler"), ["0"]);
     expect(mockAxios.patch).toHaveBeenCalledWith("/thongs/routes/0", {
       currentHandlerIdx: 0,
     });
     expect(mockAxios.get).toHaveBeenCalledWith("/thongs/routes");
   });
 
-  it("should patch route config when select delay time", () => {
-    const { getByTestId } = renderApp();
-    userEvent.selectOptions(getByTestId("delay"), ["0"]);
+  it("should patch route config when select delay time", async () => {
+    const user = userEvent.setup();
+    renderApp();
+
+    await user.selectOptions(await screen.findByTestId("delay"), ["0"]);
     expect(mockAxios.patch).toHaveBeenCalledWith("/thongs/routes/0", {
       delay: 0,
     });
@@ -71,17 +77,22 @@ describe("App", () => {
 
   describe("search", () => {
     it("should not show route when search value does not match any route", async () => {
-      const { getByRole, findByText } = renderApp();
-      userEvent.type(getByRole("searchbox"), "a string");
-      expect(await findByText("No route is found", { exact: false }))
+      const user = userEvent.setup();
+      renderApp();
+
+      await user.type(screen.getByRole("textbox"), "a string");
+      expect(await screen.findByText("No route found", { exact: false }))
         .toBeInTheDocument;
     });
     it("should show route when search value matches the patch", async () => {
-      const { getByRole, findByText, queryByText } = renderApp();
-      userEvent.type(getByRole("searchbox"), "pages/goods");
-      expect(await findByText("Thongs is a mock server")).toBeInTheDocument;
+      const user = userEvent.setup();
+      renderApp();
+
+      await user.type(screen.getByRole("textbox"), "pages/goods");
+      expect(await screen.findByText("Thongs is a mock server"))
+        .toBeInTheDocument;
       expect(
-        queryByText("No route is found", { exact: false })
+        screen.queryByText("No route found", { exact: false })
       ).not.toBeInTheDocument();
     });
   });

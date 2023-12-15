@@ -16,8 +16,9 @@ const Select: React.FC<Props> = ({
   return (
     <div className="relative">
       <select
+        title={name}
         data-testid={name}
-        className="overflow-ellipsis text-sm w-full pl-3 pr-10 py-2 outline-none border border-solid border-gray-200 rounded appearance-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 transition-all "
+        className="overflow-ellipsis text-sm w-full pl-3 pr-8 py-2 outline-none border border-solid border-gray-200 rounded appearance-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50 transition-all "
         onChange={onChange}
         value={value}
       >

@@ -9,9 +9,11 @@ import { initialState } from "./reducer/store";
 const App: React.FC<{}> = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { getRoutes } = useGetRoutes(dispatch);
+
   useEffect(() => {
     getRoutes();
   }, []);
+
   return (
     <AppProvider value={{ state, dispatch }}>
       <div className="font-mono text-gray-500 font-thin">

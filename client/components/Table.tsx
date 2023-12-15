@@ -31,53 +31,56 @@ const Table: React.FC = () => {
   return (
     <>
       <div className="mt-0 ">
-        <ol>
-          <li className="flex even:bg-gray-100 items-center py-3 ">
-            <div className="py-1 pl-4 w-6/12">Path</div>
-            <div className="py-1 pl-4 w-5/12">Response</div>
-            <div className="py-1 px-4 w-1/12">Delay</div>
-          </li>
-          {_isEmpty(filteredRoutes) && (
-            <li className="pl-4 py-4 bg-gray-100">🙁 No route is found...</li>
-          )}
-          {filterRoutes(routes, searchValue).map(
-            (
-              {
-                id: routeId,
-                name,
-                method,
-                path,
-                handlers,
-                currentHandlerIdx,
-                delay,
-              },
-              idx
-            ) => (
-              <li className="flex even:bg-gray-100 items-center " key={idx}>
-                <div className="py-4 pl-4 w-6/12 text-lg flex justify-start items-center">
-                  <MethodBadge method={method as Method} />
-                  <span className="ml-3 text-base text-gray-800">{path}</span>
-                  <span className="ml-5 text-xs text-gray-600">{name}</span>
-                </div>
-                <div className="py-1 pl-4 w-5/12">
+        <table className="w-full">
+          <thead>
+            <tr>
+              <th>
+                <div className="font-normal text-left px-4 py-3">Route</div>
+              </th>
+              <th>
+                <div className="font-normal text-left px-4 py-3">Response</div>
+              </th>
+              <th className="w-28">
+                <div className="font-normal text-left px-4 py-3">Delay</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {_isEmpty(filteredRoutes) && (
+              <tr className="items-center">
+                <td className="py-3 pl-4 text-lg">🙁 No route found...</td>
+              </tr>
+            )}
+            {filteredRoutes.map((route, idx) => (
+              <tr className=" even:bg-gray-100 items-center" key={idx}>
+                <td className="py-3 pl-4 text-lg flex justify-start items-center">
+                  <MethodBadge method={route.method as Method} />
+                  <dl>
+                    <dt className="ml-3 text-xs font-bold text-gray-600">
+                      {route.name}
+                    </dt>
+                    <dd className="ml-3 text-xs text-gray-800">{route.path}</dd>
+                  </dl>
+                </td>
+                <td className="py-1 pl-4">
                   <Select
                     name={"handler"}
-                    value={String(currentHandlerIdx)}
-                    options={handlers.map(({ name }, idx) => ({
-                      label: name,
+                    value={String(route.currentHandlerIdx)}
+                    options={route.handlers.map((handler, idx) => ({
+                      label: handler.name,
                       value: String(idx),
                     }))}
                     onChange={(e) => {
-                      updateRouteQuery(routeId, {
+                      updateRouteQuery(route.id, {
                         currentHandlerIdx: Number(e.target.value),
                       });
                     }}
                   />
-                </div>
-                <div className="py-1 px-4 w-1/12">
+                </td>
+                <td className="py-1 px-4">
                   <Select
                     name={"delay"}
-                    value={String(delay)}
+                    value={String(route.delay)}
                     options={[
                       { label: "0s", value: "0" },
                       { label: "2s", value: "2" },
@@ -85,16 +88,16 @@ const Table: React.FC = () => {
                       { label: "10s", value: "10" },
                     ]}
                     onChange={(e) => {
-                      updateRouteQuery(routeId, {
+                      updateRouteQuery(route.id, {
                         delay: Number(e.target.value),
                       });
                     }}
                   />
-                </div>
-              </li>
-            )
-          )}
-        </ol>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   );
