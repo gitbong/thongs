@@ -1,6 +1,6 @@
 {
   "name": "thongs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/Thongs.js",
   "license": "MIT",
   "scripts": {
@@ -27,6 +27,10 @@
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
     "lodash": "^4.17.21"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gitbong/thongs"
   },
   "keywords": [
     "JSON",
