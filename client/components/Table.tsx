@@ -23,7 +23,7 @@ const Table: React.FC = () => {
   } = useAppContext();
 
   const { updateRoute: updateRouteQuery } = useUpdateRoute(
-    dispatch as Dispatch
+    dispatch as Dispatch,
   );
 
   const filteredRoutes = filterRoutes(routes, searchValue);
@@ -52,7 +52,7 @@ const Table: React.FC = () => {
               </tr>
             )}
             {filteredRoutes.map((route, idx) => (
-              <tr className=" even:bg-gray-100 items-center" key={idx}>
+              <tr className=" odd:bg-gray-100 items-center" key={idx}>
                 <td className="py-3 pl-4 text-lg flex justify-start items-center">
                   <MethodBadge method={route.method as Method} />
                   <dl>

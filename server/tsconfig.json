@@ -18,7 +18,7 @@
     "noEmit": false,
     "jsx": "react-jsx",
     "noImplicitAny": false,
-    "types": ["@testing-library/jest-dom"]
+    "types": ["jest", "node"]
   },
   "exclude": [
     "node_modules",

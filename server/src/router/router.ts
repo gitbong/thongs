@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
-import { useSelector } from "../selector";
 import { selectRoutes } from "../selector/route";
-import { RouteState } from "../store/routesSlice";
 import delay from "../utils/delay";
+import { RouteState } from "../store/store";
+import { useSelector } from "../selector/useSelector";
 
 const router = express.Router();
 
@@ -27,7 +27,7 @@ export default () => {
       if (delayTime > 0) await delay(delayTime * 1000);
 
       response.status(status);
-      response.send(handler(request, response));
+      response.send(handler(request as any, response as any));
     });
   });
   return router;
