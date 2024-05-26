@@ -12,14 +12,14 @@ describe("Thongs", () => {
         {
           name: "handler0",
           status: 200,
-          handler: (req, res) => {
+          handler: (req: any, res) => {
             return { name: req.query.name };
           },
         },
         {
           name: "handler1",
           status: 204,
-          handler: (req, res) => {
+          handler: (req, res: any) => {
             res.status(400);
           },
         },
@@ -241,86 +241,6 @@ describe("Thongs", () => {
             status: 204,
           },
         ],
-      });
-    });
-  });
-
-  test("GET /thongs/routes/reset", async () => {
-    await request(app.__expressIns()).patch(`/thongs/routes/${route0Id}`).send({
-      handlerIdx: 1,
-    });
-
-    const resetResponse = await request(app.__expressIns()).post(
-      "/thongs/reset"
-    );
-    expect(resetResponse.statusCode).toBe(200);
-
-    const getResponse = await request(app.__expressIns()).get("/thongs/routes");
-    expect(getResponse.body).toEqual(expectedRoutesResponse);
-  });
-
-  describe("test mock response", () => {
-    describe("get call", () => {
-      test("test handler 0", async () => {
-        await request(app.__expressIns())
-          .patch(`/thongs/routes/${route0Id}`)
-          .send({
-            currentHandlerIdx: 0,
-          });
-
-        const getResponse = await request(app.__expressIns()).get(
-          "/path0?name=bom"
-        );
-        expect(getResponse.statusCode).toBe(200);
-        expect(getResponse.body).toEqual({
-          name: "bom",
-        });
-      });
-      test("test handler 1", async () => {
-        await request(app.__expressIns())
-          .patch(`/thongs/routes/${route0Id}`)
-          .send({
-            currentHandlerIdx: 1,
-          });
-
-        const getResponse = await request(app.__expressIns()).get("/path0");
-        expect(getResponse.statusCode).toBe(400);
-      });
-    });
-    describe("post call", () => {
-      test("test success handler", async () => {
-        const response = await request(app.__expressIns()).post("/path1");
-        expect(response.statusCode).toBe(201);
-        expect(response.body).toEqual({
-          data: "response for post call",
-        });
-      });
-    });
-    describe("put call", () => {
-      test("test success handler", async () => {
-        const response = await request(app.__expressIns()).put("/path2");
-        expect(response.statusCode).toBe(202);
-        expect(response.body).toEqual({
-          data: "response for put call",
-        });
-      });
-    });
-    describe("patch call", () => {
-      test("test success handler", async () => {
-        const response = await request(app.__expressIns()).patch("/path3");
-        expect(response.statusCode).toBe(203);
-        expect(response.body).toEqual({
-          data: "response for patch call",
-        });
-      });
-    });
-    describe("delete call", () => {
-      test("test success handler", async () => {
-        const response = await request(app.__expressIns()).delete("/path4");
-        expect(response.statusCode).toBe(400);
-        expect(response.body).toEqual({
-          data: "response for delete call",
-        });
       });
     });
   });

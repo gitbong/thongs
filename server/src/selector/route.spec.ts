@@ -1,4 +1,4 @@
-import { buildRouteState } from "../store/routesSlice.spec";
+import { buildRouteState } from "../store/store.spec";
 import { selectRouteById, selectRoutes } from "./route";
 
 describe("route", () => {

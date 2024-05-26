@@ -3,17 +3,10 @@ import express from "express";
 import path from "path";
 import commonHeader from "./middleware/commonHeader";
 import router from "./router/router";
-import { useSelector } from "./selector";
 import { selectRouteById, selectRoutes } from "./selector/route";
 import { Route } from "./shared/types";
-import { dispatch } from "./store";
-import {
-  reset,
-  RouteConfig,
-  RouteState,
-  saveRouteConfig,
-  updateRoute,
-} from "./store/routesSlice";
+import { RouteConfig, RouteState, store } from "./store/store";
+import { useSelector } from "./selector/useSelector";
 
 export default (routesConfig: RouteConfig[]) => {
   const app = express();
@@ -23,7 +16,8 @@ export default (routesConfig: RouteConfig[]) => {
   app.use(bodyParser.json());
   app.use(commonHeader);
 
-  routesConfig.forEach((routeConfig) => dispatch(saveRouteConfig(routeConfig)));
+  store.initialise(routesConfig);
+
   app.use("/", router());
 
   app.get("/thongs/routes", (req, res) => {
@@ -44,13 +38,9 @@ export default (routesConfig: RouteConfig[]) => {
   });
   app.patch("/thongs/routes/:id", (req, res) => {
     const routeId = req.params.id;
-    dispatch(updateRoute({ routeId, updatedData: req.body }));
+    store.updateRoute(routeId, req.body);
 
     res.send(useSelector(selectRouteById(routeId)));
-  });
-  app.post("/thongs/reset", (req, res) => {
-    dispatch(reset());
-    res.send();
   });
 
   return {

@@ -1,6 +1,6 @@
-import { useSelector } from ".";
-import * as store from "../store";
-import { buildRouteState } from "../store/routesSlice.spec";
+import { store } from "../store/store";
+import { buildRouteState } from "../store/store.spec";
+import { useSelector } from "./useSelector";
 
 describe("useSelector()", () => {
   const mockState = { config: [], routes: [buildRouteState()] };

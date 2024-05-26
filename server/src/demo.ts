@@ -9,7 +9,7 @@ const myApp = Thongs([
       {
         name: "success",
         status: 200,
-        handler: (req, res) => {
+        handler: (req: any, res) => {
           const {
             query: { a },
           } = req;
@@ -19,7 +19,7 @@ const myApp = Thongs([
       {
         name: "fail",
         status: 400,
-        handler: ({ query: { a } }, res) => {
+        handler: ({ query: { a } }: any, res) => {
           return { a, b: 33 };
         },
       },
@@ -33,7 +33,7 @@ const myApp = Thongs([
       {
         name: "success",
         status: 200,
-        handler: (req, res) => {
+        handler: (req: any, res) => {
           const {
             query: { a },
           } = req;
@@ -43,7 +43,7 @@ const myApp = Thongs([
       {
         name: "fail",
         status: 300,
-        handler: ({ query: { a } }, res) => {
+        handler: ({ query: { a } }: any, res) => {
           return { data: "response for failed post call" };
         },
       },
@@ -57,7 +57,7 @@ const myApp = Thongs([
       {
         name: "success",
         status: 500,
-        handler: (req, res) => {
+        handler: (req: any, res) => {
           const {
             query: { a },
           } = req;
@@ -67,7 +67,7 @@ const myApp = Thongs([
       {
         name: "fail",
         status: 400,
-        handler: ({ query: { a } }, res) => {
+        handler: ({ query: { a } }: any, res) => {
           return { a, b: 33 };
         },
       },
@@ -81,7 +81,7 @@ const myApp = Thongs([
       {
         name: "success",
         status: 500,
-        handler: (req, res) => {
+        handler: (req: any, res) => {
           const {
             query: { a },
           } = req;
@@ -91,7 +91,7 @@ const myApp = Thongs([
       {
         name: "fail",
         status: 400,
-        handler: ({ query: { a } }, res) => {
+        handler: ({ query: { a } }: any, res) => {
           return { a, b: 33 };
         },
       },
@@ -105,7 +105,7 @@ const myApp = Thongs([
       {
         name: "success",
         status: 500,
-        handler: (req, res) => {
+        handler: (req: any, res) => {
           const {
             query: { a },
           } = req;
@@ -115,7 +115,7 @@ const myApp = Thongs([
       {
         name: "fail",
         status: 400,
-        handler: ({ query: { a } }, res) => {
+        handler: ({ query: { a } }: any, res) => {
           return { a, b: 33 };
         },
       },

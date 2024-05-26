@@ -1,3 +1,3 @@
-import { getState } from "../store";
+import { store } from "../store/store";
 
-export const useSelector = <T = any>(selector): T => selector(getState());
+export const useSelector = <T = any>(selector): T => selector(store.getState());

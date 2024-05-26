@@ -1,7 +1,7 @@
 import _flow from "lodash/flow";
-import { RoutesState, RouteState } from "../store/routesSlice";
+import { RouteState, RootState } from "../store/store";
 
-export const selectRoutes = (state: RoutesState): RouteState[] => state.routes;
+export const selectRoutes = (state: RootState): RouteState[] => state.routes;
 
 export const selectRouteById = (routeId: string) =>
   _flow([
